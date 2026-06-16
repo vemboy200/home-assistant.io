@@ -2,9 +2,7 @@
 title: PowerShades
 description: Instructions on how to integrate PowerShades motorized shades with Home Assistant.
 ha_category:
-  - Button
   - Cover
-  - Sensor
 ha_release: 2026.7
 ha_iot_class: Local Push
 ha_config_flow: true
@@ -12,12 +10,9 @@ ha_codeowners:
   - '@vemboy200'
 ha_domain: powershades
 ha_platforms:
-  - button
   - cover
-  - diagnostics
-  - sensor
 ha_integration_type: device
-ha_quality_scale: platinum
+ha_quality_scale: silver
 ha_dhcp: true
 ---
 
@@ -53,42 +48,6 @@ Each shade is represented as a cover entity, which supports:
 - **Open** and **close** the shade fully.
 - **Set position**, to move the shade to a specific position between 0% and 100%.
 - **Stop**, to stop the shade while it is moving.
-
-### Buttons
-
-In addition to the cover entity, each shade gets the following buttons:
-
-- **Toggle shade**: opens or closes the shade depending on its current position, or stops it if it is moving.
-- **Identify** (diagnostic entity): makes the shade's motor wiggle, so you can tell which physical shade an entity corresponds to.
-- **Jog up** / **Jog down**, **Step up** / **Step down**, **Set upper limit** / **Set lower limit**, and **Clear limits** (configuration entity): used to calibrate the shade's travel limits. A typical workflow is to jog the shade close to the desired position, use step to fine-tune it, and then set the limit.
-
-### Sensors
-
-Battery percentage and battery voltage are available as diagnostic entity sensors. These are disabled by default and can be enabled from the device page.
-
-## Actions
-
-In addition to the standard cover actions (`cover.open_cover`, `cover.close_cover`, `cover.stop_cover`, and `cover.set_cover_position`), the PowerShades integration provides the following actions. All actions target a PowerShades cover entity.
-
-| Action | Description |
-| ------ | ----------- |
-| `powershades.toggle_shade` | Toggles the shade between open and closed positions (stops it if moving). |
-| `powershades.jog_up` | Moves the shade up continuously until it reaches a limit or is stopped. Useful when setting limits. |
-| `powershades.jog_down` | Moves the shade down continuously until it reaches a limit or is stopped. Useful when setting limits. |
-| `powershades.step_up` | Moves the motor up one step, for trimming limits. |
-| `powershades.step_down` | Moves the motor down one step, for trimming limits. |
-| `powershades.set_upper_limit` | Sets the upper limit (fully open position) for a PowerShades device. |
-| `powershades.set_lower_limit` | Sets the lower limit (fully closed position) for a PowerShades device. |
-| `powershades.clear_limits` | Clears both the upper and lower limits for a PowerShades device. |
-| `powershades.set_shade_name` | Renames a PoE shade on the device itself. The Home Assistant device name is updated to match. |
-
-### Action: Set shade name
-
-The `powershades.set_shade_name` action takes one additional field:
-
-| Data attribute | Optional | Description |
-| --------------- | -------- | ----------- |
-| `name` | No | The new shade name, 1-50 ASCII characters. |
 
 ## Automation examples
 
