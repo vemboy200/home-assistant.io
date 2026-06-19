@@ -37,7 +37,7 @@ Discovery will usually find shades on your network automatically. If you need to
 
 {% include integrations/config_flow.md %}
 
-If your shade's IP address changes later (for example, after a DHCP reassignment), open the integration entry and select **Reconfigure** to update it without losing your entities.
+If your shade's IP address changes later (for example, after a DHCP reassignment), remove the integration entry and add it again.
 
 ## Supported functionality
 
@@ -124,7 +124,7 @@ This means Home Assistant cannot communicate with the shade. Check the following
 
 - The shade is powered on and connected to your network.
 - Home Assistant can reach UDP port 42 on the shade, and UDP broadcasts are routed between subnets if Home Assistant and the shade are on different ones.
-- The IP address entered is correct and not already used by another config entry. If the shade's IP address has changed, open its integration entry and select **Reconfigure** to update it.
+- The IP address entered is correct and not already used by another config entry. If the shade's IP address has changed, remove the integration entry and add it again.
 
 ### Enabling debug logging
 
