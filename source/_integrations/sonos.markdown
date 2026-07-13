@@ -7,7 +7,7 @@ ha_category:
 featured: true
 ha_release: 0.7.3
 ha_iot_class: Local Push
-ha_requires_internet: None
+ha_requires_internet: Setup
 ha_config_flow: true
 ha_domain: sonos
 ha_codeowners:

@@ -5,7 +5,7 @@ ha_release: 2022.2
 ha_category:
   - Energy
 ha_iot_class: Local Polling
-ha_requires_internet: None
+ha_requires_internet: Setup
 ha_config_flow: true
 ha_domain: homewizard
 ha_codeowners:
