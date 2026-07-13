@@ -17,6 +17,7 @@ ha_category:
   - Vacuum
 ha_release: 0.89
 ha_iot_class: Local Polling
+ha_requires_internet: Setup
 ha_config_flow: true
 ha_codeowners:
   - '@rytilahti'

@@ -8,6 +8,7 @@ ha_category:
   - Update
 ha_release: 0.102
 ha_iot_class: Local Push
+ha_requires_internet: Conditional
 ha_config_flow: true
 ha_codeowners:
   - '@frenck'
