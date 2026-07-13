@@ -12,6 +12,8 @@ ha_category:
   - Time
   - Vacuum
 ha_iot_class: Local Polling
+ha_iot_class_secondary:
+  - Cloud Polling
 ha_requires_internet: Required
 ha_release: 2023.5
 ha_config_flow: true

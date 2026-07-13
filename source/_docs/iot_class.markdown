@@ -88,8 +88,8 @@ Some integrations genuinely communicate in more than one way, and a single class
 
 A secondary class is only listed if losing it would mean losing part of the integration's advertised functionality, not just making it slower or less efficient. An integration that only falls back to polling as a resilience measure, without losing any functionality, stays single-class.
 
-- [Ecovacs](/integrations/ecovacs/): primary Cloud push, secondary Local push and Local polling. Most setups are cloud-based, but choosing a self-hosted server instead of Ecovacs's cloud servers during setup makes the integration fully local instead, connecting to the self-hosted server over both a polled REST API and a push-based MQTT connection, so losing either would mean losing part of that self-hosted option entirely.
-- [Motionblinds Bluetooth](/integrations/motionblinds_ble/): primary Assumed state, secondary Local polling. Home Assistant doesn't poll the motor automatically, but you can set up your own automation to do it. For anyone who does, losing that would mean losing real state feedback entirely, not just getting it less often.
+- [Roborock](/integrations/roborock/): primary Local polling, secondary Cloud polling. Robot vacuums communicate locally, but the Dyad wet/dry vacuum and Zeo washer/dryer don't support local communication at all and are entirely cloud-dependent, exposed over an MQTT connection, so losing the cloud class would mean losing those devices completely, not just degrading the vacuums.
+- [Reolink](/integrations/reolink/): primary Local push, secondary Local polling. Most entities support push updates, with polling only kept as a redundant backup. But entities without push support rely on polling as their only update method, so losing it would mean losing those entities' state entirely, not just delaying it.
 
 ## State
 

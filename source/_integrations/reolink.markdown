@@ -7,6 +7,8 @@ ha_category:
   - Media source
   - Update
 ha_iot_class: Local Push
+ha_iot_class_secondary:
+  - Local Polling
 ha_requires_internet: Conditional
 ha_release: 2023.1
 ha_domain: reolink
