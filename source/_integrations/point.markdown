@@ -51,7 +51,7 @@ The integration supports the following device types within Home Assistant:
   - [Sensor](#sensor)
 
 {% note %}
-The Point is just active occasionally so the [sensors](#sensor) are only updated every hour or so. The [binary sensors](#binary-sensor) are however updated via [Cloud Push](/blog/2016/02/12/classifying-the-internet-of-things/#cloud-pushing-new-state), making the changes close to instant.
+The Point is just active occasionally so the [sensors](#sensor) are only updated every hour or so. The [binary sensors](#binary-sensor) are however updated via [Cloud Push](/docs/iot_class/#cloud-pushing-new-state), making the changes close to instant.
 {% endnote %}
 
 ## Alarm
