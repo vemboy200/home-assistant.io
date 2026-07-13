@@ -64,6 +64,8 @@
       {%- assign requires_internet = "Required" -%}
     {%- elsif page.ha_iot_class == "Local Polling" or page.ha_iot_class == "Local Push" or page.ha_iot_class == "Calculated" or page.ha_iot_class == "Assumed State" -%}
       {%- assign requires_internet = "None" -%}
+    {%- elsif page.ha_iot_class == "Configurable" -%}
+      {%- assign requires_internet = "Conditional" -%}
     {%- endif -%}
   {%- endunless -%}
 

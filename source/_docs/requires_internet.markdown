@@ -18,16 +18,13 @@ An integration classified as local in its [IoT class](/docs/iot_class/) can stil
 
 ## How this is determined
 
-For most integrations, the internet requirement follows directly from their [IoT class](/docs/iot_class/):
+For every integration, the internet requirement is derived automatically from its [IoT class](/docs/iot_class/), unless it declares its own value instead:
 
-- Cloud polling and Cloud push integrations are always classified as Required, since they depend on the manufacturer's cloud by definition.
-- Local polling, Local push, Calculated, and Assumed state integrations are always classified as None. These devices, like infrared and RF remotes, or Bluetooth-based devices, don't depend on anything outside your local network.
+- Cloud polling and Cloud push integrations are classified as Required, since they depend on the manufacturer's cloud by definition.
+- Local polling, Local push, Calculated, and Assumed state integrations are classified as None. These devices, like infrared and RF remotes, or Bluetooth-based devices, don't depend on anything outside your local network.
+- Configurable integrations, like the individual MQTT entity platforms, are classified as Conditional. Whether they need an internet connection depends entirely on how you set them up, such as whether your MQTT broker is local or cloud-hosted, so Conditional is the honest default rather than a guess.
 
-One integration class doesn't fit that pattern and needs to declare its internet requirement manually instead:
-
-- Configurable integrations, like MQTT, depend entirely on how you set them up, so they can't get a fixed internet requirement any more than they can get a fixed IoT class.
-
-Any Local polling, Local push, or Assumed state integration that still depends on the manufacturer's cloud, for authentication or otherwise, overrides the automatic None classification with Setup or Conditional instead.
+Any integration can override its automatic classification by declaring its own value instead, for a Local polling, Local push, or Assumed state integration that still depends on the manufacturer's cloud, for authentication or otherwise, or for a Configurable integration whose own internet requirement is better known than the default.
 
 ### Choosing between Setup and Conditional
 
