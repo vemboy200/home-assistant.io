@@ -5,6 +5,7 @@ ha_category:
   - Energy
 ha_release: 0.76
 ha_iot_class: Local Polling
+ha_requires_internet: Conditional
 ha_domain: enphase_envoy
 ha_zeroconf: true
 ha_config_flow: true

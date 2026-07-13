@@ -16,6 +16,7 @@ ha_category:
   - Vacuum
 ha_release: 0.78
 ha_iot_class: Local Push
+ha_requires_internet: Setup
 ha_codeowners:
   - '@danielhiversen'
   - '@RenierM26'

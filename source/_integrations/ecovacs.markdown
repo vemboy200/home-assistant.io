@@ -6,6 +6,7 @@ ha_category:
   - Lawn mower
   - Vacuum
 ha_iot_class: Cloud Push
+ha_requires_internet: Conditional
 ha_release: 0.77
 ha_codeowners:
   - '@mib1185'

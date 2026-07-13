@@ -8,6 +8,7 @@ ha_category:
   - Light
   - Media Player
 ha_iot_class: Local Polling
+ha_requires_internet: Conditional
 ha_config_flow: true
 ha_codeowners:
   - '@lawtancool'
