@@ -20,6 +20,7 @@ ha_category:
   - Update
 ha_release: 0.44
 ha_iot_class: Local Polling
+ha_requires_internet: None
 featured: true
 ha_config_flow: true
 ha_codeowners:

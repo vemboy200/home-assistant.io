@@ -23,6 +23,7 @@ ha_codeowners:
   - '@chemelli74'
   - '@bdraco'
 ha_iot_class: Local Push
+ha_requires_internet: None
 ha_domain: shelly
 featured: true
 ha_config_flow: true

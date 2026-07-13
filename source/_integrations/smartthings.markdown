@@ -25,6 +25,7 @@ ha_category:
   - Water heater
 ha_release: 0.87
 ha_iot_class: Cloud Push
+ha_requires_internet: Required
 ha_config_flow: true
 ha_domain: smartthings
 ha_platforms:

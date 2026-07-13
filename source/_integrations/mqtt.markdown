@@ -7,6 +7,7 @@ ha_category:
 featured: true
 ha_release: pre 0.7
 ha_iot_class: Local Push
+ha_requires_internet: Conditional
 ha_config_flow: true
 ha_codeowners:
   - '@emontnemery'

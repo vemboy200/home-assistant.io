@@ -6,6 +6,7 @@ ha_category:
 featured: true
 ha_release: 0.56
 ha_iot_class: Cloud Push
+ha_requires_internet: Required
 ha_codeowners:
   - '@home-assistant/cloud'
 ha_domain: google_assistant

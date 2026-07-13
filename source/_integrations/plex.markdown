@@ -9,6 +9,7 @@ ha_category:
 featured: true
 ha_release: 0.7.4
 ha_iot_class: Local Push
+ha_requires_internet: Setup
 ha_config_flow: true
 ha_codeowners:
   - '@jjlawren'

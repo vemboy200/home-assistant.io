@@ -22,6 +22,7 @@ ha_category:
   - Weather
 ha_release: 0.24
 ha_iot_class: Local Push
+ha_requires_internet: None
 ha_codeowners:
   - '@Julius2342'
   - '@farmio'

@@ -5,6 +5,7 @@ ha_category:
   - Hub
   - Light
 ha_iot_class: Local Push
+ha_requires_internet: None
 featured: true
 ha_release: '0.60'
 ha_config_flow: true

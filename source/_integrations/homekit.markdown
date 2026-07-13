@@ -6,6 +6,7 @@ ha_category:
   - Voice
 ha_release: 0.64
 ha_iot_class: Local Push
+ha_requires_internet: None
 ha_domain: homekit
 ha_config_flow: true
 ha_codeowners:

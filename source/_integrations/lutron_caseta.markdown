@@ -13,6 +13,7 @@ ha_category:
   - Switch
 ha_release: 0.41
 ha_iot_class: Local Push
+ha_requires_internet: None
 ha_domain: lutron_caseta
 ha_config_flow: true
 ha_codeowners:
