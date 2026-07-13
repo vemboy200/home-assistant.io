@@ -28,3 +28,9 @@ One integration class doesn't fit that pattern and needs to declare its internet
 - Configurable integrations, like MQTT, depend entirely on how you set them up, so they can't get a fixed internet requirement any more than they can get a fixed IoT class.
 
 Any Local polling, Local push, or Assumed state integration that still depends on the manufacturer's cloud, for authentication or otherwise, overrides the automatic None classification with Setup or Conditional instead.
+
+### Choosing between Setup and Conditional
+
+Setup and Conditional aren't two equally valid options to pick between. Setup makes a specific promise: after the one-time setup step, the integration never needs an internet connection again. Conditional makes no such promise.
+
+If an integration needs an internet connection during setup and for even one thing afterward, however small or occasional, it doesn't qualify for Setup. Use Conditional instead. For example, an integration might require signing in to a cloud account to authenticate during setup, but also rely on that same cloud account for an update entity or an optional feature later on. Since something is still needed after setup, that integration is Conditional, not Setup.
