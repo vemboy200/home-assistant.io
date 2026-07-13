@@ -3,72 +3,6 @@ title: "IoT classes"
 description: "How Home Assistant classifies the way an integration communicates with a device or service."
 ---
 
-<!-- Home Assistant classifies every integration by how it communicates with a device or service: whether that happens locally or through the cloud, and whether Home Assistant has to ask for an update or gets notified automatically. This is called the integration's *IoT class*, and you can find it listed on each integration's documentation page.
-
-Knowing an integration's IoT class helps you understand what to expect from it, such as how quickly a change shows up in Home Assistant, or whether it keeps working if your internet connection goes down.
-
-{% note %}
-The IoT class describes how Home Assistant technically talks to a device or service. It doesn't always tell you whether an integration needs an internet connection to work. Some integrations classified as local still depend on the manufacturer's cloud for things like authentication, so check an integration's own documentation for details on its internet requirements.
-{% endnote %}
-
-## Classifiers
-
-- {% icon "mdi:circle-half-full" %} Assumed state: Home Assistant can't retrieve the state of the device. It assumes the state based on the last command it sent.
-- {% icon "mdi:cloud-upload" %} Cloud polling: Home Assistant integrates with the device through the cloud and requires an active internet connection. Because Home Assistant checks for updates periodically, a change might not be noticed right away.
-- {% icon "mdi:cloud-download" %} Cloud push: Home Assistant integrates with the device through the cloud and requires an active internet connection. Home Assistant is notified as soon as a new state is available.
-- {% icon "mdi:upload-network-outline" %} Local polling: Home Assistant communicates directly with the device. Because Home Assistant checks for updates periodically, a change might not be noticed right away.
-- {% icon "mdi:download-network-outline" %} Local push: Home Assistant communicates directly with the device. Home Assistant is notified as soon as a new state is available.
-- {% icon "mdi:sigma" %} Calculated: The integration doesn't talk to a device or service at all. Its state is derived from other entities or data already in Home Assistant, such as a sensor that combines several other sensors.
-- {% icon "mdi:tune-variant" %} Configurable: The integration's communication style depends entirely on how you set it up, so it can't be pinned to one fixed class. MQTT integrations are a common example, since their behavior depends on your broker and the devices publishing to it.
-
-## How state and control are classified
-
-An integration's class comes down to two separate things: how a device reports its *state*, and how Home Assistant *controls* it.
-
-### State
-
-How a device reports its state generally falls into one of the following categories. These aren't mutually exclusive, since a device's state can be available both through the cloud and locally.
-
-#### No state available
-
-Some devices only accept commands and can't report anything back, like a device controlled over infrared. Home Assistant has to assume that a command worked, since there's no way to confirm it. If the device is controlled another way, like with its original remote, Home Assistant's assumed state can end up wrong.
-
-#### Polling the cloud
-
-The device reports its state only to the manufacturer's cloud, and Home Assistant has to check in regularly to see if anything changed. This lets you control the device from anywhere, but it stops working if your internet connection or the manufacturer's cloud service goes down.
-
-#### Cloud pushing new state
-
-Like polling the cloud, but the cloud notifies Home Assistant as soon as a new state is available, so Home Assistant doesn't have to ask. Home Assistant finds out about a change as soon as the cloud does.
-
-#### Polling the local device
-
-Home Assistant checks the device directly over the local network at regular intervals to see if anything changed. This doesn't depend on the internet, but the device needs to stay reachable on the network at all times, which usually means it can't run on battery alone.
-
-#### Local device pushing new state
-
-The device notifies Home Assistant directly over the local network as soon as its state changes. This is usually the fastest and most efficient option, and it can allow battery-powered devices to sleep between updates. If the device doesn't also support polling, Home Assistant won't know its state after starting up until the next change comes in.
-
-### Control
-
-Controlling a device also happens locally or through the cloud, but what matters more is whether Home Assistant can confirm that a command worked.
-
-#### No control available
-
-The device can only report its state and can't be controlled.
-
-#### Poll state after sending a command
-
-Home Assistant checks the device's state again after sending a command to see if it worked. It can take a moment before the new state is confirmed.
-
-#### Device pushes a state update
-
-The device doesn't respond to the command directly, but pushes a new state shortly after. Home Assistant assumes that update is related to the command.
-
-#### Command returns the new state
-
-The device responds to the command with its new state right away. This is the most reliable option. -->
-
 The core of home automation is knowing what’s going on. The faster we know about a state change, the better we can serve the user. If you want to have your lights to turn on when you arrive at home, it doesn’t help if it only knows about it after you’ve already opened the door and manually (!!) turned on the lights.
 
 Each smart device consists of the ‘normal’ device and the piece that makes it ‘smart’: the connectivity. The connectivity part of a device can consists of either control, state or both.
@@ -147,9 +81,6 @@ We want our users to get the best home automation experience out there and this 
 {% note %}
 The IoT class describes how Home Assistant technically talks to a device or service. It doesn't always tell you whether an integration needs an internet connection to work. Some integrations classified as local still depend on the manufacturer's cloud for things like authentication, so check an integration's own documentation for details on its internet requirements.
 {% endnote %}
-
-The background to how we got to these classifiers can be read after the break.
-<!--more-->
 
 ## State
 
@@ -301,33 +232,7 @@ Controlling a device can, just like state, be done through cloud and/or local co
         The very best. These devices will answer the command with the new state after executing the command.
     </td>
   </tr>
-  
-
 </table>
-
-<!-- ### No control available
-
-These devices are not able to be controlled. They will only offer state.
-
-### Poll State after sending command
-
-These devices will require the state to be polled after sending a command to see if a command was successful.
-
-Advantages:
-
-- The state will be known right after the command was issued.
-
-Disadvantages:
-
-- It can take time before the state gets updated. How often do we poll and how long do we wait till we consider the command failed? Also, a state may change because of other factors. Difficult to determine if the updated state is because of our command.
-
-### Device pushes state update
-
-These devices will not return a new state as a result of the command but instead will push a new state right away. The downside of this approach is that we have to assume that a state update coming in within a certain period of time after a command is related to the command.
-
-### Command returns new state
-
-The very best. These devices will answer the command with the new state after executing the command. -->
 
 ## Classifying Home Assistant
 
