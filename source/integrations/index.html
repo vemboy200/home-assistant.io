@@ -25,6 +25,7 @@ regenerate: false
 {%- assign categories = components | map: 'ha_category' | join: ',' | downcase | split: ',' | uniq | sort -%}
 {%- assign iot_classes = "Local Push,Local Polling,Cloud Push,Cloud Polling,Assumed State,Calculated,Configurable" |
 join: ',' | split: ',' -%}
+{%- assign requires_internet_values = "None,Setup,Conditional,Required" | split: ',' -%}
 {% assign quality_scales =
 "icon:🏆,name:platinum|icon:🥇,name:gold|icon:🥈,name:silver|icon:🥉,name:bronze|icon:🏠,name:internal|icon:💾,name:legacy"
 | split: "|"
@@ -50,7 +51,7 @@ join: ',' | split: ',' -%}
   </div>
 
   <div class="grid-filters">
-    <div class="grid__item one-quarter lap-one-whole palm-one-whole">
+    <div class="grid__item one-fifth lap-one-whole palm-one-whole">
       <div class="integration-filter integration-filter-select">
         <h3 class="filter-title">Category</h3>
         <select class="ha_category" name="category" data-id="cat">
@@ -86,7 +87,7 @@ join: ',' | split: ',' -%}
       </div>
     </div>
 
-    <div class="grid__item one-quarter lap-one-whole palm-one-whole">
+    <div class="grid__item one-fifth lap-one-whole palm-one-whole">
       <div class="integration-filter integration-filter-select">
         <h3 class="filter-title">Version</h3>
         <select class="ha_category" name="versions" data-id="version">
@@ -102,7 +103,7 @@ join: ',' | split: ',' -%}
       </div>
     </div>
 
-    <div class="grid__item one-quarter lap-one-whole palm-one-whole">
+    <div class="grid__item one-fifth lap-one-whole palm-one-whole">
       <div class="integration-filter integration-filter-select">
         <h3 class="filter-title">IoT Class</h3>
         <select class="ha_category" name="iot_classes" data-id="iot_class">
@@ -117,7 +118,19 @@ join: ',' | split: ',' -%}
       </div>
     </div>
 
-    <div class="grid__item one-quarter lap-one-whole palm-one-whole">
+    <div class="grid__item one-fifth lap-one-whole palm-one-whole">
+      <div class="integration-filter integration-filter-select">
+        <h3 class="filter-title">Internet Requirement</h3>
+        <select class="ha_category" name="requires_internets" data-id="requires_internet">
+          <option value="#">All</option>
+          {%- for requires_internet_value in requires_internet_values -%}
+            <option value="{{ requires_internet_value | slugify }}">{{ requires_internet_value }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+    </div>
+
+    <div class="grid__item one-fifth lap-one-whole palm-one-whole">
       <div class="integration-filter integration-filter-select">
         <h3 class="filter-title">Quality Scale</h3>
         <select class="ha_category" name="quality_scales" data-id="quality_scale">
@@ -164,6 +177,16 @@ join: ',' | split: ',' -%}
           {% capture category %} "{{ ha_category | slugify | downcase }}"{% endcapture %}
           {% assign categories = categories | push: category %}
         {%- endfor -%}
+        {%- assign requires_internet = component.ha_requires_internet -%}
+        {%- unless requires_internet -%}
+          {%- if component.ha_iot_class == "Cloud Polling" or component.ha_iot_class == "Cloud Push" -%}
+            {%- assign requires_internet = "Required" -%}
+          {%- elsif component.ha_iot_class == "Local Polling" or component.ha_iot_class == "Local Push" or component.ha_iot_class == "Calculated" or component.ha_iot_class == "Assumed State" -%}
+            {%- assign requires_internet = "None" -%}
+          {%- elsif component.ha_iot_class == "Configurable" -%}
+            {%- assign requires_internet = "Conditional" -%}
+          {%- endif -%}
+        {%- endunless -%}
         {
           url: "{{ component.url }}",
           title: "{{component.title}}",
@@ -175,6 +198,7 @@ join: ',' | split: ',' -%}
           ha_brand: "{{component.ha_brand}}",
           wwha: {% if component.works_with %} true{% else %} false{% endif %},
           iot_class: "{{component.ha_iot_class | slugify }}",
+          requires_internet: "{{ requires_internet | slugify }}",
           quality_scale: "{{component.ha_quality_scale}}"
         },
       {% endif -%}
@@ -201,13 +225,14 @@ join: ',' | split: ',' -%}
         const title = integrations[i].title.toLowerCase();
         const domain = integrations[i].domain;
         const iot_class = integrations[i].iot_class;
+        const requires_internet = integrations[i].requires_internet;
         const quality_scale = integrations[i].quality_scale;
         const title_normalized = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         const title_dedashed = title.replace(/[-_]/g, " ");
         const title_normalized_dedashed = title_normalized.replace(/[-_]/g, " ");
 
         integrations[i].titleLC = title;
-        integrations[i].search = `${title} ${title_normalized} ${title_dedashed} ${title_normalized_dedashed} ${domain} ${iot_class} ${quality_scale}`;
+        integrations[i].search = `${title} ${title_normalized} ${title_dedashed} ${title_normalized_dedashed} ${domain} ${iot_class} ${requires_internet} ${quality_scale}`;
       }
 
       // sort the components alphabetically
@@ -219,6 +244,7 @@ join: ',' | split: ',' -%}
       window.$catFilter = document.querySelector('.integration-filter select[data-id="cat"]');
       window.$versionFilter = document.querySelector('.integration-filter select[data-id="version"]');
       window.$iot_classFilter = document.querySelector('.integration-filter select[data-id="iot_class"]');
+      window.$requires_internetFilter = document.querySelector('.integration-filter select[data-id="requires_internet"]');
       window.$quality_scaleFilter = document.querySelector('.integration-filter select[data-id="quality_scale"]');
       window.$searchFilter = document.querySelector('.component-search input');
       window.$brandsFilter = [...document.querySelectorAll('.integration-filter input[name="brands"]')]
@@ -311,6 +337,7 @@ join: ',' | split: ',' -%}
         && !(hash.startsWith('#search'))
         && !(hash.startsWith('#version'))
         && !(hash.startsWith('#iot_class'))
+        && !(hash.startsWith('#requires_internet'))
         && !(hash.startsWith('#quality_scale'))
       ) {
         // regular filter categories
@@ -321,6 +348,11 @@ join: ',' | split: ',' -%}
       if (hash.startsWith('#iot_class/') || queryParams.has('iot_class')) {
         let query = getQueryValue('iot_class');
         queryFilter.iot_class = query;
+      }
+
+      if (hash.startsWith('#requires_internet/') || queryParams.has('requires_internet')) {
+        let query = getQueryValue('requires_internet');
+        queryFilter.requires_internet = query;
       }
 
       if (hash.startsWith('#quality_scale/') || queryParams.has('quality_scale')) {
@@ -614,6 +646,9 @@ join: ',' | split: ',' -%}
           break;
         case 'iot_class':
           category = 'IoT class';
+          break;
+        case 'requires_internet':
+          category = 'Internet requirement';
           break;
         case 'quality_scale':
           category = 'Quality scale';
