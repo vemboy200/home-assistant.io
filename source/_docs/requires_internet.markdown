@@ -21,10 +21,10 @@ An integration classified as local in its [IoT class](/docs/iot_class/) can stil
 For most integrations, the internet requirement follows directly from their [IoT class](/docs/iot_class/):
 
 - Cloud polling and Cloud push integrations are always classified as Required, since they depend on the manufacturer's cloud by definition.
-- Local polling, Local push, and Calculated integrations are always classified as None, since they don't depend on anything outside your local network.
+- Local polling, Local push, Calculated, and Assumed state integrations are always classified as None. These devices, like infrared and RF remotes, or Bluetooth-based devices, don't depend on anything outside your local network.
 
-Some integrations don't fit that pattern and need to declare their internet requirement manually instead:
+One integration class doesn't fit that pattern and needs to declare its internet requirement manually instead:
 
 - Configurable integrations, like MQTT, depend entirely on how you set them up, so they can't get a fixed internet requirement any more than they can get a fixed IoT class.
-- Assumed state integrations are usually local hardware, but this isn't guaranteed, so it's declared explicitly rather than assumed.
-- Any Local polling or Local push integration that still depends on the manufacturer's cloud, for authentication or otherwise, overrides the automatic None classification with Setup or Conditional instead.
+
+Any Local polling, Local push, or Assumed state integration that still depends on the manufacturer's cloud, for authentication or otherwise, overrides the automatic None classification with Setup or Conditional instead.

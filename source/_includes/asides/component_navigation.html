@@ -62,7 +62,7 @@
   {%- unless requires_internet -%}
     {%- if page.ha_iot_class == "Cloud Polling" or page.ha_iot_class == "Cloud Push" -%}
       {%- assign requires_internet = "Required" -%}
-    {%- elsif page.ha_iot_class == "Local Polling" or page.ha_iot_class == "Local Push" or page.ha_iot_class == "Calculated" -%}
+    {%- elsif page.ha_iot_class == "Local Polling" or page.ha_iot_class == "Local Push" or page.ha_iot_class == "Calculated" or page.ha_iot_class == "Assumed State" -%}
       {%- assign requires_internet = "None" -%}
     {%- endif -%}
   {%- endunless -%}

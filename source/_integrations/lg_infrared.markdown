@@ -7,7 +7,6 @@ ha_category:
   - Media player
 ha_release: 2026.4
 ha_iot_class: Assumed State
-ha_requires_internet: None
 ha_codeowners:
   - '@abmantis'
 ha_domain: lg_infrared
