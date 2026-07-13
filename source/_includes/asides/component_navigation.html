@@ -58,6 +58,22 @@
     </div>
     {%- endif -%}
 
+    {%- if page.ha_iot_class_secondary %}
+    <div class='section'>
+      It also supports:
+      {%- for secondary_class in page.ha_iot_class_secondary %}
+        {% if secondary_class == "Assumed State" %}<iconify-icon icon='mdi:circle-half-full'></iconify-icon>{%- endif -%}
+        {% if secondary_class == "Cloud Polling" %}<iconify-icon icon='mdi:cloud-upload'></iconify-icon>{%- endif -%}
+        {% if secondary_class == "Cloud Push" %}<iconify-icon icon='mdi:cloud-download'></iconify-icon>{%- endif -%}
+        {% if secondary_class == "Local Polling" %}<iconify-icon icon='mdi:upload-network-outline'></iconify-icon>{%- endif -%}
+        {% if secondary_class == "Local Push" %}<iconify-icon icon='mdi:download-network-outline'></iconify-icon>{%- endif -%}
+        {% if secondary_class == "Calculated" %}<iconify-icon icon='mdi:sigma'></iconify-icon>{%- endif -%}
+        {% if secondary_class == "Configurable" %}<iconify-icon icon='mdi:tune-variant'></iconify-icon>{%- endif -%}
+        &nbsp;<a href='/docs/iot_class/#classifiers'>{{ secondary_class }}</a>{% unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    </div>
+    {%- endif -%}
+
   {%- assign requires_internet = page.ha_requires_internet -%}
   {%- unless requires_internet -%}
     {%- if page.ha_iot_class == "Cloud Polling" or page.ha_iot_class == "Cloud Push" -%}
