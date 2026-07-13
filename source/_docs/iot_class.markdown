@@ -90,6 +90,7 @@ A secondary class is only listed if losing it would mean losing part of the inte
 
 - [Roborock](/integrations/roborock/): primary Local polling, secondary Cloud polling. Robot vacuums communicate locally, but the Dyad wet/dry vacuum and Zeo washer/dryer don't support local communication at all and are entirely cloud-dependent, exposed over an MQTT connection, so losing the cloud class would mean losing those devices completely, not just degrading the vacuums.
 - [Reolink](/integrations/reolink/): primary Local push, secondary Local polling. Most entities support push updates, with polling only kept as a redundant backup. But entities without push support rely on polling as their only update method, so losing it would mean losing those entities' state entirely, not just delaying it.
+- [Philips Hue](/integrations/hue/): primary Local push, secondary Local polling. V2 bridges push state changes instantly, but V1 bridges don't support push at all, since the V1 API doesn't offer it, so those bridges depend entirely on polling.
 
 ## State
 
