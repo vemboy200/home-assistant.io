@@ -79,7 +79,7 @@ Selecting the **Configure** button on the WeMo {% term integration %} will bring
 
 ![Device Options](/images/integrations/wemo/device_options.png)
 
-**Subscribe to device local push updates**: WeMo devices support both the *Local Push* and *Local Polling* [IoT classes](/blog/2016/02/12/classifying-the-internet-of-things/#classifiers). Home Assistant will default subscribe to event notifications from WeMo devices and use the Local Push IoT class. If the Local Push doesn't work, Home Assistant will use Local Polling as a fallback. Some devices are known not to work well with Local Push. WeMo devices expect to be on the same subnet as Home Assistant and will not work with Local Push otherwise. For devices known not to work with Local Push, the **Subscribe to local push updates** option can be disabled to force only Local Polling to be used.
+**Subscribe to device local push updates**: WeMo devices support both the *Local Push* and *Local Polling* [IoT classes](/docs/iot_class/#classifiers). Home Assistant will default subscribe to event notifications from WeMo devices and use the Local Push IoT class. If the Local Push doesn't work, Home Assistant will use Local Polling as a fallback. Some devices are known not to work well with Local Push. WeMo devices expect to be on the same subnet as Home Assistant and will not work with Local Push otherwise. For devices known not to work with Local Push, the **Subscribe to local push updates** option can be disabled to force only Local Polling to be used.
 
 There are some downsides of disabling **Subscribe to device local push updates**:
 
