@@ -4,6 +4,7 @@ description: Instructions on how to integrate Motionblinds from Coulisse B.V. in
 ha_category:
   - Cover
 ha_iot_class: Local Push
+ha_requires_internet: Setup
 ha_release: 2020.12
 ha_domain: motion_blinds
 ha_codeowners:

@@ -29,6 +29,7 @@ Examples:
 
 - [Sonos](/integrations/sonos/)
 - [HomeWizard](/integrations/homewizard/)
+- [Motionblinds](/integrations/motion_blinds/)
 
 ### Conditional
 
