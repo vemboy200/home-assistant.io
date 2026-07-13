@@ -68,6 +68,25 @@
   </div>
   {%- endif -%}
 
+  {%- assign requires_internet = page.ha_requires_internet -%}
+  {%- unless requires_internet -%}
+    {%- if page.ha_iot_class == "Cloud Polling" or page.ha_iot_class == "Cloud Push" -%}
+      {%- assign requires_internet = "Required" -%}
+    {%- elsif page.ha_iot_class == "Local Polling" or page.ha_iot_class == "Local Push" or page.ha_iot_class == "Calculated" -%}
+      {%- assign requires_internet = "None" -%}
+    {%- endif -%}
+  {%- endunless -%}
+
+  {%- if requires_internet %}
+  <div class='section'>
+    {% if requires_internet == "None" %}<iconify-icon icon='mdi:cloud-off-outline'></iconify-icon>{%- endif -%}
+    {% if requires_internet == "Setup" %}<iconify-icon icon='mdi:cloud-key-outline'></iconify-icon>{%- endif -%}
+    {% if requires_internet == "Conditional" %}<iconify-icon icon='mdi:cloud-question-outline'></iconify-icon>{%- endif -%}
+    {% if requires_internet == "Required" %}<iconify-icon icon='mdi:cloud'></iconify-icon>{%- endif -%}
+    &nbsp;Internet requirement: <a href='/docs/requires_internet/#classifiers'>{{ requires_internet }}.</a>
+  </div>
+  {%- endif -%}
+
   {% if page.works_with %}
     <div class="section">
       <a href="https://works-with.home-assistant.io/">
