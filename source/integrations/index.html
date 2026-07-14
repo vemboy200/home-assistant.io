@@ -110,7 +110,9 @@ join: ',' | split: ',' -%}
           <option value="#">All</option>
           {%- for iot_class in iot_classes -%}
             {%- assign iot_class_count = components | where: 'ha_iot_class', iot_class | size -%}
-            {%- if iot_class_count != 0 -%}
+            {%- assign iot_class_secondary_count = components | where_exp: 'item', 'item.ha_iot_class_secondary contains iot_class' | size -%}
+            {%- assign iot_class_total_count = iot_class_count | plus: iot_class_secondary_count -%}
+            {%- if iot_class_total_count != 0 -%}
               <option value="{{ iot_class | slugify }}">{{ iot_class }}</option>
             {%- endif -%}
           {%- endfor -%}
@@ -177,6 +179,11 @@ join: ',' | split: ',' -%}
           {% capture category %} "{{ ha_category | slugify | downcase }}"{% endcapture %}
           {% assign categories = categories | push: category %}
         {%- endfor -%}
+        {%- assign iot_classes_secondary = "" | split: ',' -%}
+        {%- for secondary_class in component.ha_iot_class_secondary -%}
+          {% capture secondary %} "{{ secondary_class | slugify }}"{% endcapture %}
+          {% assign iot_classes_secondary = iot_classes_secondary | push: secondary %}
+        {%- endfor -%}
         {%- assign requires_internet = component.ha_requires_internet -%}
         {%- unless requires_internet -%}
           {%- if component.ha_iot_class == "Cloud Polling" or component.ha_iot_class == "Cloud Push" -%}
@@ -198,6 +205,7 @@ join: ',' | split: ',' -%}
           ha_brand: "{{component.ha_brand}}",
           wwha: {% if component.works_with %} true{% else %} false{% endif %},
           iot_class: "{{component.ha_iot_class | slugify }}",
+          iot_class_secondary: [{{ iot_classes_secondary | join: "," }}],
           requires_internet: "{{ requires_internet | slugify }}",
           quality_scale: "{{component.ha_quality_scale}}"
         },
@@ -225,6 +233,7 @@ join: ',' | split: ',' -%}
         const title = integrations[i].title.toLowerCase();
         const domain = integrations[i].domain;
         const iot_class = integrations[i].iot_class;
+        const iot_class_secondary = (integrations[i].iot_class_secondary || []).join(" ");
         const requires_internet = integrations[i].requires_internet;
         const quality_scale = integrations[i].quality_scale;
         const title_normalized = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -232,7 +241,7 @@ join: ',' | split: ',' -%}
         const title_normalized_dedashed = title_normalized.replace(/[-_]/g, " ");
 
         integrations[i].titleLC = title;
-        integrations[i].search = `${title} ${title_normalized} ${title_dedashed} ${title_normalized_dedashed} ${domain} ${iot_class} ${requires_internet} ${quality_scale}`;
+        integrations[i].search = `${title} ${title_normalized} ${title_dedashed} ${title_normalized_dedashed} ${domain} ${iot_class} ${iot_class_secondary} ${requires_internet} ${quality_scale}`;
       }
 
       // sort the components alphabetically
@@ -417,8 +426,15 @@ join: ',' | split: ',' -%}
             if (!integration['wwha']) return false;
           }
 
-          // check for version / iot / quality matches
-          if (!(key === 'cat' || key === 'search' || key === 'brands')) {
+          // check for matching IoT class, either primary or a declared secondary class
+          if (key === 'iot_class') {
+            const matchesPrimary = integration[key] === query[key];
+            const matchesSecondary = (integration.iot_class_secondary || []).includes(query[key]);
+            if (!matchesPrimary && !matchesSecondary) return false;
+          }
+
+          // check for version / quality matches
+          if (!(key === 'cat' || key === 'search' || key === 'brands' || key === 'iot_class')) {
             if (
               integration[key] == undefined // match doesn't exist
               || integration[key] != query[key] // strings dont match
