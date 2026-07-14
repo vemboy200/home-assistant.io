@@ -1,4 +1,6 @@
 {% capture domain %}{{ page.ha_supporting_domain | default: page.ha_domain }}{% endcapture %}
+{%- assign iot_source = site.integrations | where: "ha_domain", domain | first -%}
+{%- assign iot_source = iot_source | default: page -%}
 {% assign active_installations = site.data.analytics_data.integrations[domain] | default: 0 %}
 {% assign percentage = 100.0 | times: active_installations | divided_by: site.data.analytics_data.reports_integrations | round: 1 %}
 <section class="aside-module grid__item one-whole lap-one-half">
@@ -45,26 +47,26 @@
     {% endif %}
   </div>
 
-    {%- if page.ha_iot_class %}
+    {%- if iot_source.ha_iot_class %}
     <div class='section'>
-      {% if page.ha_iot_class == "Assumed State" %}<iconify-icon icon='mdi:circle-half-full'></iconify-icon>{%- endif -%}
-      {% if page.ha_iot_class == "Cloud Polling" %}<iconify-icon icon='mdi:cloud-upload'></iconify-icon>{%- endif -%}
-      {% if page.ha_iot_class == "Cloud Push" %}<iconify-icon icon='mdi:cloud-download'></iconify-icon>{%- endif -%}
-      {% if page.ha_iot_class == "Local Polling" %}<iconify-icon icon='mdi:upload-network-outline'></iconify-icon>{%- endif -%}
-      {% if page.ha_iot_class == "Local Push" %}<iconify-icon icon='mdi:download-network-outline'></iconify-icon>{%- endif -%}
-      {% if page.ha_iot_class == "Calculated" %}<iconify-icon icon='mdi:sigma'></iconify-icon>{%- endif -%}
-      {% if page.ha_iot_class == "Configurable" %}<iconify-icon icon='mdi:tune-variant'></iconify-icon>{%- endif -%}
-      &nbsp;Its IoT class is <a href='/docs/iot_class/#classifiers'>{{ page.ha_iot_class }}.</a>
+      {% if iot_source.ha_iot_class == "Assumed State" %}<iconify-icon icon='mdi:circle-half-full'></iconify-icon>{%- endif -%}
+      {% if iot_source.ha_iot_class == "Cloud Polling" %}<iconify-icon icon='mdi:cloud-upload'></iconify-icon>{%- endif -%}
+      {% if iot_source.ha_iot_class == "Cloud Push" %}<iconify-icon icon='mdi:cloud-download'></iconify-icon>{%- endif -%}
+      {% if iot_source.ha_iot_class == "Local Polling" %}<iconify-icon icon='mdi:upload-network-outline'></iconify-icon>{%- endif -%}
+      {% if iot_source.ha_iot_class == "Local Push" %}<iconify-icon icon='mdi:download-network-outline'></iconify-icon>{%- endif -%}
+      {% if iot_source.ha_iot_class == "Calculated" %}<iconify-icon icon='mdi:sigma'></iconify-icon>{%- endif -%}
+      {% if iot_source.ha_iot_class == "Configurable" %}<iconify-icon icon='mdi:tune-variant'></iconify-icon>{%- endif -%}
+      &nbsp;Its IoT class is <a href='/docs/iot_class/#classifiers'>{{ iot_source.ha_iot_class }}.</a>
     </div>
     {%- endif -%}
 
-  {%- assign requires_internet = page.ha_requires_internet -%}
+  {%- assign requires_internet = iot_source.ha_requires_internet -%}
   {%- unless requires_internet -%}
-    {%- if page.ha_iot_class == "Cloud Polling" or page.ha_iot_class == "Cloud Push" -%}
+    {%- if iot_source.ha_iot_class == "Cloud Polling" or iot_source.ha_iot_class == "Cloud Push" -%}
       {%- assign requires_internet = "Required" -%}
-    {%- elsif page.ha_iot_class == "Local Polling" or page.ha_iot_class == "Local Push" or page.ha_iot_class == "Calculated" or page.ha_iot_class == "Assumed State" -%}
+    {%- elsif iot_source.ha_iot_class == "Local Polling" or iot_source.ha_iot_class == "Local Push" or iot_source.ha_iot_class == "Calculated" or iot_source.ha_iot_class == "Assumed State" -%}
       {%- assign requires_internet = "None" -%}
-    {%- elsif page.ha_iot_class == "Configurable" -%}
+    {%- elsif iot_source.ha_iot_class == "Configurable" -%}
       {%- assign requires_internet = "Conditional" -%}
     {%- endif -%}
   {%- endunless -%}
