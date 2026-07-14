@@ -177,13 +177,20 @@ join: ',' | split: ',' -%}
           {% capture category %} "{{ ha_category | slugify | downcase }}"{% endcapture %}
           {% assign categories = categories | push: category %}
         {%- endfor -%}
-        {%- assign requires_internet = component.ha_requires_internet -%}
+        {%- assign iot_source = component -%}
+        {%- if component.ha_supporting_domain -%}
+          {%- assign iot_lookup = site.integrations | where: "ha_domain", component.ha_supporting_domain | first -%}
+          {%- if iot_lookup -%}
+            {%- assign iot_source = iot_lookup -%}
+          {%- endif -%}
+        {%- endif -%}
+        {%- assign requires_internet = iot_source.ha_requires_internet -%}
         {%- unless requires_internet -%}
-          {%- if component.ha_iot_class == "Cloud Polling" or component.ha_iot_class == "Cloud Push" -%}
+          {%- if iot_source.ha_iot_class == "Cloud Polling" or iot_source.ha_iot_class == "Cloud Push" -%}
             {%- assign requires_internet = "Required" -%}
-          {%- elsif component.ha_iot_class == "Local Polling" or component.ha_iot_class == "Local Push" or component.ha_iot_class == "Calculated" or component.ha_iot_class == "Assumed State" -%}
+          {%- elsif iot_source.ha_iot_class == "Local Polling" or iot_source.ha_iot_class == "Local Push" or iot_source.ha_iot_class == "Calculated" or iot_source.ha_iot_class == "Assumed State" -%}
             {%- assign requires_internet = "None" -%}
-          {%- elsif component.ha_iot_class == "Configurable" -%}
+          {%- elsif iot_source.ha_iot_class == "Configurable" -%}
             {%- assign requires_internet = "Conditional" -%}
           {%- endif -%}
         {%- endunless -%}
@@ -197,7 +204,7 @@ join: ',' | split: ',' -%}
           domain: "{{component.ha_domain}}",
           ha_brand: "{{component.ha_brand}}",
           wwha: {% if component.works_with %} true{% else %} false{% endif %},
-          iot_class: "{{component.ha_iot_class | slugify }}",
+          iot_class: "{{iot_source.ha_iot_class | slugify }}",
           requires_internet: "{{ requires_internet | slugify }}",
           quality_scale: "{{component.ha_quality_scale}}"
         },
