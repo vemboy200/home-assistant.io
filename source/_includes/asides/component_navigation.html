@@ -1,6 +1,11 @@
 {% capture domain %}{{ page.ha_supporting_domain | default: page.ha_domain }}{% endcapture %}
-{%- assign iot_source = site.integrations | where: "ha_domain", domain | first -%}
-{%- assign iot_source = iot_source | default: page -%}
+{%- assign iot_source = page -%}
+{%- if page.ha_supporting_domain -%}
+  {%- assign iot_lookup = site.integrations | where: "ha_domain", page.ha_supporting_domain | first -%}
+  {%- if iot_lookup -%}
+    {%- assign iot_source = iot_lookup -%}
+  {%- endif -%}
+{%- endif -%}
 {% assign active_installations = site.data.analytics_data.integrations[domain] | default: 0 %}
 {% assign percentage = 100.0 | times: active_installations | divided_by: site.data.analytics_data.reports_integrations | round: 1 %}
 <section class="aside-module grid__item one-whole lap-one-half">
